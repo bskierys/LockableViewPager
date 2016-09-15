@@ -1,0 +1,36 @@
+# build files ignores
+/build
+/sample/build
+/lockableviewpager/build
+.gradle
+
+# iml files ignores
+lockableviewpager/lockableviewpager.iml
+sample/sample.iml
+LockableViewPager.iml
+
+# git produced files
+*.class
+*.orig
+*.REMOTE
+
+# IDEA/Android Studio ignores
+*.iml
+*.ipr
+*.iws
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+**/.idea/datasources.xml
+**/.idea/dataSources.ids
+**/.idea/gradle.xml
+**/.idea/misc.xml
+**/.idea/modules.xml
+**/.idea/libraries
+**/.idea/dictionaries
+**/.idea/.name
+**/.idea/vcs.xml
+
+# others
+.DS_Store
+/local.properties
+
