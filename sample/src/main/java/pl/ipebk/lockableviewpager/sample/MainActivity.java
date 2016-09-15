@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
-    private PagerAdapter mPagerAdapter;
+    private PagerAdapter pagerAdapter;
 
 
     @BindView(R.id.block_view_pager) LockableViewPager viewPager;
@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(mPagerAdapter);
+        pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
         viewPager.setThreshold(-300);
     }
 
