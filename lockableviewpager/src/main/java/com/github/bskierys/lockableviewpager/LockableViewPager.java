@@ -3,7 +3,7 @@
 * date: 2016-09-15
 * email: bskierys@gmail.com
 */
-package pl.ipebk.lockableviewpager;
+package com.github.bskierys.lockableviewpager;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

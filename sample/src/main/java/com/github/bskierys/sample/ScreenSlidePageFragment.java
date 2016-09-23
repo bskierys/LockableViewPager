@@ -3,7 +3,7 @@
 * date: 2016-09-15
 * email: bskierys@gmail.com
 */
-package pl.ipebk.lockableviewpager.sample;
+package com.github.bskierys.sample;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.github.bskierys.lockableviewpager.sample.R;
+
 import butterknife.ButterKnife;
 
 import butterknife.BindView;

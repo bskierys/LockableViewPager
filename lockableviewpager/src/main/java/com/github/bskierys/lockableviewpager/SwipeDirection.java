@@ -3,7 +3,7 @@
 * date: 2016-09-15
 * email: bskierys@gmail.com
 */
-package pl.ipebk.lockableviewpager;
+package com.github.bskierys.lockableviewpager;
 
 /**
  * TODO: Generic description. Replace with real one.

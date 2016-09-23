@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'Maven'
+    bintrayName = 'lockable-view-pager'
+
+    publishedGroupId = 'com.github.bskierys'
+    libraryName = 'LockableViewPager'
+    artifact = 'lockable-view-pager'
+
+    libraryDescription = 'Simple extension for Android ViewPager that can be locked for swiping'
+
+    siteUrl = 'https://github.com/bskierys/LockableViewPager'
+    gitUrl = 'https://github.com/bskierys/LockableViewPager.git'
+
+    libraryVersion = '0.1.0'
+
+    developerId = 'bskierys'
+    developerName = 'Bartlomiej Kierys'
+    developerEmail = 'bskierys@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
 
@@ -31,4 +55,62 @@ dependencies {
     // unit testing
     testCompile mobileDependencies.junit
     testCompile mobileDependencies.robolectric
+}
+
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+def siteUrl = 'https://github.com/bskierys/LockableViewPager'
+def gitUrl = 'https://github.com/bskierys/LockableViewPager.git'
+
+version '0.1.0'
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name 'LockableViewPager'
+            description 'Simple extension for Android ViewPager that can be locked for swiping'
+            url siteUrl
+            inceptionYear '2016'
+
+            packaging 'aar'
+            groupId 'com.github.bskierys'
+            artifactId 'lockableviewpager'
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+            }
+            developers {
+                developer {
+                    id 'bskierys'
+                    name 'Bartlomiej Kierys'
+                    email 'bskierys@gmail.com'
+                }
+            }
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
+        }
+    }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = 'Maven'
+        name = 'lockableviewpager'
+        userOrg = user
+        licenses = ['Apache-2.0']
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+    }
 }

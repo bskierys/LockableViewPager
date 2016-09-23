@@ -1,31 +1,32 @@
-package pl.ipebk.lockableviewpager.sample;
+package com.github.bskierys.sample;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.Button;
+
+import com.github.bskierys.lockableviewpager.LockableViewPager;
+import com.github.bskierys.lockableviewpager.SwipeDirection;
+import com.github.bskierys.lockableviewpager.sample.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import pl.ipebk.lockableviewpager.LockableViewPager;
-import pl.ipebk.lockableviewpager.SwipeDirection;
 
 public class MainActivity extends AppCompatActivity {
 
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final String[] PAGE_NAMES = { "menzurka", "paradygmat", "karmelitka", "terpentyna", "zalewajka" };
+    private static final String[] PAGE_NAMES = {"menzurka", "paradygmat", "karmelitka", "terpentyna", "zalewajka"};
 
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
     private PagerAdapter pagerAdapter;
-
 
     @BindView(R.id.block_view_pager) LockableViewPager viewPager;
 
@@ -37,11 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setThreshold(-300);
     }
 
     @OnClick(R.id.btn_block_left) public void onBlockLeft(Button self) {
-        if(viewPager.isLocked(SwipeDirection.LEFT)){
+        if (viewPager.isLocked(SwipeDirection.LEFT)) {
             viewPager.unlock(SwipeDirection.LEFT);
             self.setText("LOCK LEFT");
         } else {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_block_right) public void onBlockRight(Button self) {
-        if(viewPager.isLocked(SwipeDirection.RIGHT)){
+        if (viewPager.isLocked(SwipeDirection.RIGHT)) {
             viewPager.unlock(SwipeDirection.RIGHT);
             self.setText("LOCK RIGHT");
         } else {
@@ -61,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in sequence.
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
