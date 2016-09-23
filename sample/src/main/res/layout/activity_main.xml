@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.github.bskierys.sample.MainActivity">
 
-    <pl.ipebk.lockableviewpager.LockableViewPager
+    <com.github.bskierys.lockableviewpager.LockableViewPager
         android:id="@+id/block_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
