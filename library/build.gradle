@@ -1,44 +1,4 @@
-/*
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.3'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.5'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-    }
-}
-*/
-
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-
-/*ext {
-    bintrayRepo = 'Maven'
-    bintrayName = 'lockable-view-pager'
-
-    publishedGroupId = 'com.github.bskierys'
-    libraryName = 'LockableViewPager'
-    artifact = 'lockable-view-pager'
-
-    libraryDescription = 'Simple extension for Android ViewPager that can be locked for swiping'
-
-    siteUrl = 'https://github.com/bskierys/LockableViewPager'
-    gitUrl = 'https://github.com/bskierys/LockableViewPager.git'
-
-    libraryVersion = '0.1.0'
-
-    developerId = 'bskierys'
-    developerName = 'Bartlomiej Kierys'
-    developerEmail = 'bskierys@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}*/
 
 android {
     def globalConfiguration = rootProject.extensions.getByName("ext")
@@ -73,9 +33,14 @@ dependencies {
     testCompile mobileDependencies.robolectric
 }
 
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+version = "0.1.0"
+
 def siteUrl = 'https://github.com/bskierys/LockableViewPager'
 def gitUrl = 'https://github.com/bskierys/LockableViewPager.git'
-version '0.1.0'
+group = "com.github.bskierys.lockable-view-pager"
 
 install {
     repositories.mavenInstaller {
@@ -83,11 +48,8 @@ install {
             name 'LockableViewPager'
             description 'Simple extension for Android ViewPager that can be locked for swiping'
             url siteUrl
-            inceptionYear '2016'
 
             packaging 'aar'
-            groupId 'com.github.bskierys'
-            artifactId 'lockable-view-pager'
 
             licenses {
                 license {
