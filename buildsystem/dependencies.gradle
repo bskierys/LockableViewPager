@@ -10,15 +10,14 @@ properties.load(project.rootProject.file('gradle.properties').newDataInputStream
 def versionMajor = properties.getProperty('versionMajor')
 def versionMinor = properties.getProperty('versionMinor')
 def versionPatch = properties.getProperty('versionPatch')
-def versionBuild = properties.getProperty('versionBuild')
 
 ext {
     libraryMinSdkVersion = 9
     libraryTargetSdkVersion = 23
     libraryCompileSdkVersion = 23
     libraryBuildToolsVersion = "23.0.2"
-    libraryVersionCode = versionMajor.toInteger() * 10000000 + versionMinor.toInteger() * 100000 + versionPatch.toInteger() * 1000 + versionBuild.toInteger()
-    libraryVersionName = "${versionMajor}.${versionMinor}.${versionPatch}-b${versionBuild}"
+    libraryVersionCode = versionMajor.toInteger() * 10000 + versionMinor.toInteger() * 100 + versionPatch.toInteger()
+    libraryVersionName = "${versionMajor}.${versionMinor}.${versionPatch}"
 
     //Libraries
     androidSupportVersion = '23.2.0'
