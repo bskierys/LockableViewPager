@@ -21,3 +21,8 @@ test:
     - cp -r library/build/outputs $CIRCLE_ARTIFACTS
     # copy the test results to the test results directory.
     - cp -r library/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
+deployment:
+  release:
+    tag: /[0-9]+(\.[0-9]+)*/
+    commands:
+      - ./deploy.sh
