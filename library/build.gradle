@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
-android {
-    def globalConfiguration = rootProject.extensions.getByName("ext")
+def globalConfiguration = rootProject.extensions.getByName("ext")
 
+android {
     compileSdkVersion globalConfiguration.getAt("libraryCompileSdkVersion")
     buildToolsVersion globalConfiguration.getAt("libraryBuildToolsVersion")
 
@@ -36,7 +36,7 @@ dependencies {
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "0.1.0"
+version = globalConfiguration.getAt("libraryVersionName")
 
 def siteUrl = 'https://github.com/bskierys/LockableViewPager'
 def gitUrl = 'https://github.com/bskierys/LockableViewPager.git'
@@ -94,11 +94,9 @@ artifacts {
     archives sourcesJar
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
     configurations = ['archives']
     pkg {
         repo = 'Maven'
