@@ -3,6 +3,8 @@
 ## [0.1.1](https://github.com/bskierys/LockableViewPager/tree/0.1.1) (2016-10-06)
 [Full Changelog](https://github.com/bskierys/LockableViewPager/compare/0.1.0...0.1.1)
 
+**Closed issues:**
+
 - Script to automatically push library to bintray when CI build is successful [\#3](https://github.com/bskierys/LockableViewPager/issues/3)
 - CircleCi integration [\#2](https://github.com/bskierys/LockableViewPager/issues/2)
 - Manual bintray upload [\#1](https://github.com/bskierys/LockableViewPager/issues/1)
