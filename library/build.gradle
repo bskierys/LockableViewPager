@@ -105,5 +105,6 @@ bintray {
         licenses = ['Apache-2.0']
         websiteUrl = siteUrl
         vcsUrl = gitUrl
+        publish = true
     }
 }
