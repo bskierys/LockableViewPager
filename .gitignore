@@ -30,6 +30,9 @@ LockableViewPager.iml
 **/.idea/.name
 **/.idea/vcs.xml
 
+# private files
+*.priv
+
 # others
 .DS_Store
 /local.properties
