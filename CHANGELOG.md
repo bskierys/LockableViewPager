@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.1.2](https://github.com/bskierys/LockableViewPager/tree/0.1.2) (2016-10-09)
+[Full Changelog](https://github.com/bskierys/LockableViewPager/compare/0.1.1...0.1.2)
+
+**Closed issues:**
+
+- Release notes generation [\#4](https://github.com/bskierys/LockableViewPager/issues/4)
+
 ## [0.1.1](https://github.com/bskierys/LockableViewPager/tree/0.1.1) (2016-10-06)
 [Full Changelog](https://github.com/bskierys/LockableViewPager/compare/0.1.0...0.1.1)
 
