@@ -12,5 +12,20 @@ public enum SwipeDirection {
     ALL,
     LEFT,
     RIGHT,
-    NONE
+    NONE;
+
+    public static SwipeDirection getOppositeDirection(SwipeDirection direction) {
+        switch (direction) {
+            case LEFT:
+                return SwipeDirection.RIGHT;
+            case RIGHT:
+                return SwipeDirection.LEFT;
+            case ALL:
+                return SwipeDirection.NONE;
+            case NONE:
+                return SwipeDirection.ALL;
+            default:
+                return SwipeDirection.ALL;
+        }
+    }
 }

@@ -18,9 +18,9 @@ import android.view.MotionEvent;
 public class LockableViewPager extends ViewPager {
     private static final int DEFAULT_THRESHOLD = 300;
 
+    protected boolean shouldLog = false;
     private int currentPage;
     private float initialXValue;
-    private int threshold = DEFAULT_THRESHOLD;
     private SwipeDirection direction = SwipeDirection.ALL;
     private final OnPageChangeListener lockPageChangeListener = new OnPageChangeListener() {
         @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -39,10 +39,12 @@ public class LockableViewPager extends ViewPager {
             }
         }
 
-        @Override public void onPageSelected(int position) {}
+        @Override public void onPageSelected(int position) { }
 
         @Override public void onPageScrollStateChanged(int state) {}
     };
+
+    private int threshold = DEFAULT_THRESHOLD;
 
     public LockableViewPager(Context context) {
         super(context);
@@ -65,12 +67,22 @@ public class LockableViewPager extends ViewPager {
         this.threshold = threshold;
     }
 
+    @Override public void setCurrentItem(int item, boolean smoothScroll) {
+            super.setCurrentItem(item, smoothScroll);
+    }
+
     @Override public boolean onTouchEvent(MotionEvent ev) {
-        return isSwipeAllowed(ev) && super.onTouchEvent(ev);
+        if (isSwipeAllowed(ev)) {
+            return super.onTouchEvent(ev);
+        }
+        return false;
     }
 
     @Override public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return isSwipeAllowed(ev) && super.onInterceptTouchEvent(ev);
+        if (isSwipeAllowed(ev)) {
+            return super.onInterceptTouchEvent(ev);
+        }
+        return false;
     }
 
     private boolean isSwipeAllowed(MotionEvent ev) {
@@ -100,22 +112,19 @@ public class LockableViewPager extends ViewPager {
     }
 
     /**
+     * Use this method to show more logs for this component.
+     */
+    public void setLog(boolean shouldLog) {
+        this.shouldLog = shouldLog;
+    }
+
+    /**
      * Use this method to lock swiping through viewpager. Does nothing if direction is already locked.
      *
      * @param direction Direction that should be blocked
      */
     public void lock(SwipeDirection direction) {
-        if (direction == SwipeDirection.LEFT || direction == SwipeDirection.RIGHT) {
-            if (this.direction == SwipeDirection.NONE || this.direction == getOppositeDirection(direction)) {
-                Logger.d("This direction is already blocked");
-            } else if (this.direction == direction) {
-                this.direction = SwipeDirection.NONE;
-            } else if (this.direction == SwipeDirection.ALL) {
-                this.direction = getOppositeDirection(direction);
-            }
-        } else if (direction == SwipeDirection.ALL) {
-            this.direction = SwipeDirection.NONE;
-        }
+        lockInternal(direction);
     }
 
     /**
@@ -124,10 +133,33 @@ public class LockableViewPager extends ViewPager {
      * @param direction Direction that should be unlocked
      */
     public void unlock(SwipeDirection direction) {
+        unlockInternal(direction);
+    }
+
+    protected void lockInternal(SwipeDirection direction) {
+        if (direction == SwipeDirection.LEFT || direction == SwipeDirection.RIGHT) {
+            if (this.direction == SwipeDirection.NONE || this.direction == SwipeDirection.getOppositeDirection
+                    (direction)) {
+                if (shouldLog) {
+                    Logger.d("This direction is already blocked");
+                }
+            } else if (this.direction == direction) {
+                this.direction = SwipeDirection.NONE;
+            } else if (this.direction == SwipeDirection.ALL) {
+                this.direction = SwipeDirection.getOppositeDirection(direction);
+            }
+        } else if (direction == SwipeDirection.ALL) {
+            this.direction = SwipeDirection.NONE;
+        }
+    }
+
+    protected void unlockInternal(SwipeDirection direction) {
         if (direction == SwipeDirection.LEFT || direction == SwipeDirection.RIGHT) {
             if (this.direction == SwipeDirection.ALL || this.direction == direction) {
-                Logger.d("This direction is not locked. So why unlock?");
-            } else if (this.direction == getOppositeDirection(direction)) {
+                if (shouldLog) {
+                    Logger.d("This direction is not locked. So why unlock?");
+                }
+            } else if (this.direction == SwipeDirection.getOppositeDirection(direction)) {
                 this.direction = SwipeDirection.ALL;
             } else if (this.direction == SwipeDirection.NONE) {
                 this.direction = direction;
@@ -142,22 +174,15 @@ public class LockableViewPager extends ViewPager {
      * @return Tells if direction is currently unlocked
      */
     public boolean isLocked(SwipeDirection direction) {
-        return this.direction == SwipeDirection.NONE || this.direction == getOppositeDirection(direction);
+        return this.direction == SwipeDirection.NONE || this.direction == SwipeDirection.getOppositeDirection
+                (direction);
     }
 
-    private SwipeDirection getOppositeDirection(SwipeDirection direction) {
-        switch (direction) {
-            case LEFT:
-                return SwipeDirection.RIGHT;
-            case RIGHT:
-                return SwipeDirection.LEFT;
-            case ALL:
-                return SwipeDirection.NONE;
-            case NONE:
-                return SwipeDirection.ALL;
-            default:
-                return SwipeDirection.ALL;
-        }
+    /**
+     * @return Direction that is allowed to swipe
+     */
+    public SwipeDirection getAllowedDirection() {
+        return direction;
     }
 
     /**
@@ -167,5 +192,12 @@ public class LockableViewPager extends ViewPager {
      */
     public void setAllowedDirection(SwipeDirection direction) {
         this.direction = direction;
+    }
+
+    /**
+     * @return Direction that is currently locked
+     */
+    public SwipeDirection getLockedDirection() {
+        return SwipeDirection.getOppositeDirection(direction);
     }
 }

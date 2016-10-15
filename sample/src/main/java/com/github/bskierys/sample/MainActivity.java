@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
 import com.github.bskierys.lockableviewpager.LockableViewPager;
+import com.github.bskierys.lockableviewpager.PositionLockableViewPager;
 import com.github.bskierys.lockableviewpager.SwipeDirection;
 import com.github.bskierys.lockableviewpager.sample.R;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private PagerAdapter pagerAdapter;
 
-    @BindView(R.id.block_view_pager) LockableViewPager viewPager;
+    @BindView(R.id.block_view_pager) PositionLockableViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

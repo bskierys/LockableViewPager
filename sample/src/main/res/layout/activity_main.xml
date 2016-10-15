@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.github.bskierys.sample.MainActivity">
 
-    <com.github.bskierys.lockableviewpager.LockableViewPager
+    <com.github.bskierys.lockableviewpager.PositionLockableViewPager
         android:id="@+id/block_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
