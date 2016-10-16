@@ -21,19 +21,19 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/btn_block_left"
+            android:id="@+id/btn_previous"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textColor="#424242"
-            android:text="block left"/>
+            android:text="go left"/>
         <Button
-            android:id="@+id/btn_block_right"
+            android:id="@+id/btn_next"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textColor="#424242"
-            android:text="block right"/>
+            android:text="go right"/>
     </LinearLayout>
 
 </RelativeLayout>

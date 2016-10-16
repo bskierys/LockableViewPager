@@ -30,6 +30,7 @@ dependencies {
 
     // Android
     compile mobileDependencies.appcompat
+    compile mobileDependencies.support
 
     // butterknife
     compile mobileDependencies.butterknife
