@@ -34,7 +34,6 @@ public class TapToUnlockSlideFragment extends NumberedSlideFragment {
         View rootView = inflater.inflate(R.layout.sub_fragment_tap_unlock_slide, container, false);
         ButterKnife.bind(this, rootView);
 
-        listener.lockPosition(slideNumber, SwipeDirection.RIGHT);
         updateButtonState();
 
         return rootView;

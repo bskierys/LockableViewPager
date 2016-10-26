@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.github.bskierys.lockableviewpager.PositionLockableViewPager;
@@ -16,6 +17,9 @@ import com.github.bskierys.sample.slides.IntroductionSlideFragment;
 import com.github.bskierys.sample.slides.LockAnyPositionSlideFragment;
 import com.github.bskierys.sample.slides.NumberedSlideFragment;
 import com.github.bskierys.sample.slides.TapToUnlockSlideFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements NumberedSlideFrag
     /**
      * The pager adapter, which provides the pages to the view pager widget.
      */
-    private PagerAdapter pagerAdapter;
+    private ScreenSlidePagerAdapter pagerAdapter;
 
     @BindView(R.id.block_view_pager) PositionLockableViewPager viewPager;
     @BindView(R.id.btn_previous) NavigationButton previousButton;
@@ -43,6 +47,22 @@ public class MainActivity extends AppCompatActivity implements NumberedSlideFrag
         pagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addLockedDirectionListener(this);
+        viewPager.lockPosition(3,SwipeDirection.RIGHT);
+
+        // TODO: 2016-10-26 rx binding
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override public void onPageSelected(int position) {
+                pagerAdapter.handlePositionShown(position);
+            }
+
+            @Override public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @OnClick(R.id.btn_previous) public void onGoLeft() {
@@ -113,37 +133,41 @@ public class MainActivity extends AppCompatActivity implements NumberedSlideFrag
     // TODO: 2016-10-16 own ic_launcher
 
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        private int currentlyShownPosition = -1;
+        List<NumberedSlideFragment> items;
+
         private ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
+            items = new ArrayList<>();
+            items.add(AdviceSlideFragment.newInstance(0, Color.RED, "nawiguj suwając palcem"));
+            items.add(IntroductionSlideFragment.newInstance(1, Color.BLACK));
+            items.add(AdviceSlideFragment.newInstance(2, Color.RED, "przytrzymaj dluzej aby zablokowac"));
+            items.add(TapToUnlockSlideFragment.newInstance(3, Color.BLUE));
+
+            int[] blockablePostions = new int[6];
+            for (int i = 0; i < 6; i++) {
+                blockablePostions[i] = i;
+            }
+            items.add(LockAnyPositionSlideFragment.newInstance(4, Color.CYAN, blockablePostions));
+            items.add(AdviceSlideFragment.newInstance(5, Color.RED, "lista bibliotek"));
         }
 
         @Override public Fragment getItem(int position) {
-            switch (position) {
-                case 0: {
-                    return AdviceSlideFragment.newInstance(position, Color.RED, "nawiguj suwając palcem");
-                }
-                case 1: {
-                    return IntroductionSlideFragment.newInstance(position, Color.BLACK);
-                }
-                case 2: {
-                    return AdviceSlideFragment.newInstance(position, Color.RED, "przytrzymaj dluzej aby zablokowac");
-                }
-                case 3: {
-                    return TapToUnlockSlideFragment.newInstance(position, Color.BLUE);
-                }
-                case 4: {
-                    int[] blockablePostions = new int[6];
-                    for (int i = 0; i < 6; i++) {
-                        blockablePostions[i] = i;
-                    }
-                    return LockAnyPositionSlideFragment.newInstance(position, Color.CYAN, blockablePostions);
-                }
-                case 5: {
-                    // TODO: 2016-10-16 creditsSlide
-                    return AdviceSlideFragment.newInstance(position, Color.RED, "lista bibliotek");
-                }
+            return items.get(position);
+        }
+
+        public void handlePositionShown(int position) {
+            if(position == currentlyShownPosition) {
+                return;
             }
-            return null;
+
+            if (currentlyShownPosition >= 0 && currentlyShownPosition < items.size()) {
+                items.get(currentlyShownPosition).hidden();
+            }
+            if (position >= 0 && position < items.size()) {
+                items.get(position).shown();
+            }
+            this.currentlyShownPosition = position;
         }
 
         @Override public int getCount() {

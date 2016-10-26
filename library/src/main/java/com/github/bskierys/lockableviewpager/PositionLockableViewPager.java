@@ -52,7 +52,7 @@ public class PositionLockableViewPager extends LockableViewPager {
         this.setAdapter(adapter);
         resetCurrentPosition();
         resetLockedPositions();
-        swipeToPosition(startPosition);
+        setCurrentItem(startPosition);
     }
 
     void resetCurrentPosition() {
@@ -94,22 +94,6 @@ public class PositionLockableViewPager extends LockableViewPager {
         } else {
             unlockInternal(SwipeDirection.ALL);
         }
-    }
-
-    /**
-     * This method is used internally and it is not recommended for usage outside this class. Use {@link
-     * #swipeToPosition(int)} instead
-     */
-    @Override @Deprecated public final void setCurrentItem(int position) {
-        super.setCurrentItem(position);
-    }
-
-    /**
-     * This method is used internally and it is not recommended for usage outside this class. Use {@link
-     * #swipeToPosition(int)} instead
-     */
-    @Override @Deprecated public final void setCurrentItem(int position, boolean smoothScroll) {
-        super.setCurrentItem(position, smoothScroll);
     }
 
     /**
@@ -190,6 +174,12 @@ public class PositionLockableViewPager extends LockableViewPager {
         } else {
             return SwipeDirection.NONE;
         }
+    }
+
+    // TODO: 2016-10-26 doc
+    // TODO: 2016-10-26 test
+    public void setLockedDirectionForPosition(int position, SwipeDirection direction){
+        lockedPositions.put(position, direction);
     }
 
     private class PositionChangedListener extends ViewPager.SimpleOnPageChangeListener {

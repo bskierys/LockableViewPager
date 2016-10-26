@@ -1,34 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txt_advice"
+    <com.github.bskierys.sample.slides.ExpandableLayout
+        android:id="@+id/choose_position_part"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="kliknij w numerek aby zablokować pozycję"/>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/txt_advice">
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_advice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="kliknij w numerek aby zablokować pozycję"/>
 
         <LinearLayout
+            android:layout_below="@+id/txt_advice"
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"/>
 
+    </com.github.bskierys.sample.slides.ExpandableLayout>
+
+    <com.github.bskierys.sample.slides.ExpandableLayout
+        android:id="@+id/choose_side_part"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <fragment
-            android:id="@+id/choose_side"
+            android:id="@+id/choose_side_pop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:name="com.github.bskierys.sample.slides.ChooseSidePopFragment"
             tools:layout="@layout/pop_choose_side"/>
-    </RelativeLayout>
+    </com.github.bskierys.sample.slides.ExpandableLayout>
 
-</RelativeLayout>
+</LinearLayout>

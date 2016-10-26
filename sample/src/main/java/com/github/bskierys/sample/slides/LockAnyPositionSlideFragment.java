@@ -11,10 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.bskierys.lockableviewpager.SwipeDirection;
 import com.github.bskierys.lockableviewpager.sample.R;
 import com.github.bskierys.sample.NavigationButton;
 
@@ -31,6 +31,9 @@ public class LockAnyPositionSlideFragment extends NumberedSlideFragment {
 
     @BindView(R.id.container) LinearLayout positionsContainer;
     @BindView(R.id.txt_advice) TextView adviceView;
+
+    @BindView(R.id.choose_position_part) ExpandableLayout choosePositionPart;
+    @BindView(R.id.choose_side_part) ExpandableLayout chooseSidePart;
     ChooseSidePopFragment chooseSideDialog;
 
     private int[] blockablePositions;
@@ -59,8 +62,8 @@ public class LockAnyPositionSlideFragment extends NumberedSlideFragment {
         ButterKnife.bind(this, rootView);
 
         adviceView.setText("wybierz pozycję, którą chcesz zablokować");
-        chooseSideDialog = (ChooseSidePopFragment) getChildFragmentManager().findFragmentById(R.id.choose_side);
-        //chooseSideDialog.setVisibility(View.GONE);
+        chooseSideDialog = (ChooseSidePopFragment) getChildFragmentManager().findFragmentById(R.id.choose_side_pop);
+        chooseSidePart.hide(false);
 
         int rowIndex = 0;
 
@@ -94,8 +97,33 @@ public class LockAnyPositionSlideFragment extends NumberedSlideFragment {
         return rootView;
     }
 
-    private void onButtonClick(View sender, int position) {
-        NavigationButton self = (NavigationButton) sender;
+    @Override public void hidden() {
+        chooseSidePart.hide(true);
+        choosePositionPart.show(true);
+    }
+
+    private void onButtonClick(View sender, final int position) {
         Log.d("lockPosition", String.format("Position %d clicked", position));
+
+        chooseSidePart.show(true);
+        choosePositionPart.hide(true);
+        chooseSideDialog.setPosition(position, new ChooseSidePopFragment.PopInteractionListener() {
+            @Override public void lockDirection(SwipeDirection direction) {
+                listener.lockPosition(position, direction);
+            }
+
+            @Override public void unlockDirection(SwipeDirection direction) {
+                listener.unlockPosition(position, direction);
+            }
+
+            @Override public SwipeDirection getLockedDirection() {
+                return listener.getLockedDirection(position);
+            }
+
+            @Override public void closePop() {
+                chooseSidePart.hide(true);
+                choosePositionPart.show(true);
+            }
+        });
     }
 }
