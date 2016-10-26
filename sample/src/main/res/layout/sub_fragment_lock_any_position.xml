@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_advice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="kliknij w numerek aby zablokować pozycję"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txt_advice">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+
+        <fragment
+            android:id="@+id/choose_side"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.github.bskierys.sample.slides.ChooseSidePopFragment"
+            tools:layout="@layout/pop_choose_side"/>
+    </RelativeLayout>
+
+</RelativeLayout>

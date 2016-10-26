@@ -20,7 +20,6 @@ import java.util.List;
  * previous positions but you will never be able to pass position 2.
  */
 public class PositionLockableViewPager extends LockableViewPager {
-    private List<LockedDirectionListener> lockedListeners = new ArrayList<>();
     private HashMap<Integer, SwipeDirection> lockedPositions = new HashMap<>();
     private int currentPosition;
 
@@ -37,26 +36,6 @@ public class PositionLockableViewPager extends LockableViewPager {
     private void init() {
         resetCurrentPosition();
         this.addOnPageChangeListener(new PositionChangedListener());
-    }
-
-    /**
-     * Adds listener to listen for changes in direction that user is allowed to swipe
-     */
-    public void addLockedDirectionListener(LockedDirectionListener listener) {
-        lockedListeners.add(listener);
-    }
-
-    /**
-     * Removes {@link LockedDirectionListener} from list of listeners
-     */
-    public void removeLockedDirectionListener(LockedDirectionListener listener) {
-        lockedListeners.remove(listener);
-    }
-
-    private void propagateLockedDirectionChanged(SwipeDirection lockedDirection) {
-        for (LockedDirectionListener listener : lockedListeners) {
-            listener.onLockedDirectionChanged(lockedDirection);
-        }
     }
 
     @Override public void setAdapter(PagerAdapter adapter) {
@@ -137,7 +116,7 @@ public class PositionLockableViewPager extends LockableViewPager {
      * Locks current position for specific direction.User will not be able to pass this one with a swipe.
      */
     public void lockCurrentPosition(SwipeDirection direction) {
-        lockedPositions.put(getCurrentItem(), getLockedDirection());
+        lockedPositions.put(getCurrentItem(), direction);
         if (direction != getLockedDirection()) {
             lockInternal(direction);
             propagateLockedDirectionChanged(getLockedDirection());
@@ -219,16 +198,6 @@ public class PositionLockableViewPager extends LockableViewPager {
                 setCurrentItemInternal(position);
             }
         }
-    }
-
-    /**
-     * Listener to listen for changes in direction that user is allowed to swipe
-     */
-    public interface LockedDirectionListener {
-        /**
-         * Fires anytime direction that user is allowed to swipe changes
-         */
-        void onLockedDirectionChanged(SwipeDirection lockedDirection);
     }
 }
 

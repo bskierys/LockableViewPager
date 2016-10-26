@@ -24,6 +24,12 @@ import butterknife.OnClick;
 public class TapToUnlockSlideFragment extends NumberedSlideFragment {
     @BindView(R.id.btn_change_lock) TextView changeLockButton;
 
+    public static TapToUnlockSlideFragment newInstance(int slideNumber, int backgroundColor) {
+        TapToUnlockSlideFragment fragment = new TapToUnlockSlideFragment();
+        fragment.setArguments(new Bundle(), slideNumber, backgroundColor);
+        return fragment;
+    }
+
     @Override protected View onCreateSubView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.sub_fragment_tap_unlock_slide, container, false);
         ButterKnife.bind(this, rootView);

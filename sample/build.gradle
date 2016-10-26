@@ -38,4 +38,5 @@ dependencies {
 
     // unit testing
     testCompile mobileDependencies.junit
+    compile 'com.android.support:support-v4:23.4.0'
 }

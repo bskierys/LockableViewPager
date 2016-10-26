@@ -10,6 +10,9 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * ViewPager that can be locked in both direction to prevent user from accessing another page. By default pager allows
  * user to see little of next page by swiping through screen just before it gets him back to current page. This
@@ -22,6 +25,7 @@ public class LockableViewPager extends ViewPager {
     private int currentPage;
     private float initialXValue;
     private SwipeDirection direction = SwipeDirection.ALL;
+    protected List<LockedDirectionListener> lockedListeners = new ArrayList<>();
     private final OnPageChangeListener lockPageChangeListener = new OnPageChangeListener() {
         @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             if (positionOffset == 0f) {
@@ -54,6 +58,26 @@ public class LockableViewPager extends ViewPager {
     public LockableViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.addOnPageChangeListener(lockPageChangeListener);
+    }
+
+    /**
+     * Adds listener to listen for changes in direction that user is allowed to swipe
+     */
+    public void addLockedDirectionListener(LockedDirectionListener listener) {
+        lockedListeners.add(listener);
+    }
+
+    /**
+     * Removes {@link LockedDirectionListener} from list of listeners
+     */
+    public void removeLockedDirectionListener(LockedDirectionListener listener) {
+        lockedListeners.remove(listener);
+    }
+
+    protected void propagateLockedDirectionChanged(SwipeDirection lockedDirection) {
+        for (LockedDirectionListener listener : lockedListeners) {
+            listener.onLockedDirectionChanged(lockedDirection);
+        }
     }
 
     /**
@@ -199,5 +223,15 @@ public class LockableViewPager extends ViewPager {
      */
     public SwipeDirection getLockedDirection() {
         return SwipeDirection.getOppositeDirection(direction);
+    }
+
+    /**
+     * Listener to listen for changes in direction that user is allowed to swipe
+     */
+    public interface LockedDirectionListener {
+        /**
+         * Fires anytime direction that user is allowed to swipe changes
+         */
+        void onLockedDirectionChanged(SwipeDirection lockedDirection);
     }
 }

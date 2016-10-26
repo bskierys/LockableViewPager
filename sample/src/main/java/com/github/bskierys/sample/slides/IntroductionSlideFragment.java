@@ -18,6 +18,12 @@ import butterknife.ButterKnife;
  * TODO: Generic description. Replace with real one.
  */
 public class IntroductionSlideFragment extends NumberedSlideFragment {
+    public static IntroductionSlideFragment newInstance(int slideNumber, int backgroundColor) {
+        IntroductionSlideFragment fragment = new IntroductionSlideFragment();
+        fragment.setArguments(new Bundle(), slideNumber, backgroundColor);
+        return fragment;
+    }
+
     @Override protected View onCreateSubView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.sub_fragment_introduction_slide, container, false);
         ButterKnife.bind(this, rootView);

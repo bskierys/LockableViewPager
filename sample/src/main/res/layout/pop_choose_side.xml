@@ -1,0 +1,34 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:context="com.github.bskierys.sample.slides.ChooseSidePopFragment">
+
+    <com.github.bskierys.sample.NavigationButton
+        android:id="@+id/btn_lock_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="LEFT"
+        android:textColor="@color/navi_button_text"/>
+
+    <com.github.bskierys.sample.NavigationButton
+        android:id="@+id/btn_lock_right"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="RIGHT"
+        android:textColor="@color/navi_button_text"/>
+
+    <TextView
+        android:id="@+id/btn_close"
+        android:layout_width="56dp"
+        android:layout_height="36dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:text="X"/>
+
+</LinearLayout>

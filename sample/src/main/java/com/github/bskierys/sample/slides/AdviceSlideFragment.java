@@ -27,6 +27,12 @@ public class AdviceSlideFragment extends NumberedSlideFragment {
     private String advice;
     @BindView(R.id.txt_advice) TextView adviceView;
 
+    public static AdviceSlideFragment newInstance(int slideNumber, int backgroundColor, String advice) {
+        AdviceSlideFragment fragment = new AdviceSlideFragment();
+        fragment.setArguments(new Bundle(), slideNumber, backgroundColor, advice);
+        return fragment;
+    }
+
     void setArguments(Bundle args, int slideNumber, int backgroundColor, String advice) {
         args.putString(AdviceSlideFragment.ARG_ADVICE, advice);
         super.setArguments(args, slideNumber, backgroundColor);
